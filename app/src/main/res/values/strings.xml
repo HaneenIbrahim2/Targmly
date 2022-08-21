@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">ImagePro</string>
+    <string name="speachText">hello</string>
+    <string name="Username">Username</string>
+    <string name="Email">Email</string>
+    <string name="Password">Password</string>
+    <string name="ConfirmPassword">ConfirmPassword</string>
+    <string name="select">Select Item</string>
+    <string name="SignUp">Sign Up</string>
+    <string name="Login">Login</string>
+</resources>
