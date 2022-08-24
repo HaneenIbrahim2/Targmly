@@ -6,15 +6,20 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.SurfaceView;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+
+import com.example.imagepro.Auth.HomeActivity;
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase;
@@ -35,8 +40,10 @@ public class CombineLettersActivity extends Activity implements CameraBridgeView
     private signLanguageClass signLanguageClass;
     private Button clear_button;
     private Button add_button;
-    private TextView change_text;
+    private EditText change_text;
     private Button text_speech_button;
+    private Button Confirm;
+    private EditText editText;
 
 
     private BaseLoaderCallback mLoaderCallback =new BaseLoaderCallback(this) {
@@ -82,18 +89,34 @@ public class CombineLettersActivity extends Activity implements CameraBridgeView
         mOpenCvCameraView.setCvCameraViewListener(this);
         clear_button=findViewById(R.id.clear_btn);
         add_button=findViewById(R.id.add_btn);
-        change_text = findViewById(R.id.change_text);
-        text_speech_button=findViewById(R.id.Read_btn);
+        change_text =(EditText) findViewById(R.id.change_text);
+       // text_speech_button=findViewById(R.id.Read_btn);
+        Confirm=findViewById(R.id.Confirm);
+        editText = (EditText) findViewById(R.id.speechText);
+
 
         try{
 
-            signLanguageClass=new signLanguageClass(CombineLettersActivity.this,clear_button,add_button,change_text,text_speech_button,getAssets(),"hand_model.tflite","custom_label.txt",300,"Sign_language_model.tflite",96);
+            signLanguageClass=new signLanguageClass(CombineLettersActivity.this,clear_button,add_button,change_text,Confirm,editText,getAssets(),"hand_model.tflite","custom_label.txt",300,"Sign_language_model.tflite",96);
             Log.d("MainActivity","Model is successfully loaded");
         }
         catch (IOException e){
             Log.d("MainActivity","Getting some error");
             e.printStackTrace();
         }
+        Confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(),HomeActivity.class);
+               String final_text=signLanguageClass.getFinal_text();
+                i.putExtra("value",final_text);
+                startActivity(i);
+
+
+
+            }
+        });
+
     }
 
     @Override

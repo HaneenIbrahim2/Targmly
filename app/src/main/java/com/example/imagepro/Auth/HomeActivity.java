@@ -1,5 +1,7 @@
 package com.example.imagepro.Auth;
 
+import static android.provider.SyncStateContract.Columns.DATA;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -14,6 +16,8 @@ import android.widget.EditText;
 
 
 import com.example.imagepro.R;
+import com.example.imagepro.database.DATA;
+import com.example.imagepro.database.DATA;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
@@ -29,6 +33,7 @@ import com.google.mlkit.nl.translate.TranslatorOptions;
 import android.content.Intent;
 import android.speech.RecognizerIntent;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.imagepro.MainActivity;
 
@@ -38,7 +43,7 @@ public class HomeActivity extends AppCompatActivity {
     Button speakButton ;
     Button sign_lan_btn;
     Button setting_btn;
-
+    String st;
     private EditText editText;
     private EditText Transelation;
 
@@ -62,6 +67,7 @@ public class HomeActivity extends AppCompatActivity {
     private Translator translatorSpanishToArabic;
     private Translator translatorItalianToArabic;
 
+    Boolean cliced=false;
     private Boolean en=false;
     private Boolean ar=false;
     private Boolean ger=false;
@@ -70,7 +76,6 @@ public class HomeActivity extends AppCompatActivity {
     private Boolean ice=false;
     private Boolean ita=false;
     private Boolean kor=false;
-
     private Boolean booleanGerman = false;
     private Boolean booleanArabic = false;
     private Boolean booleanKorean = false;
@@ -98,7 +103,7 @@ public class HomeActivity extends AppCompatActivity {
     AutoCompleteTextView autoCompleteTextView;
     AutoCompleteTextView drop_menu;
     ArrayAdapter<String> adapterItems;
-    ArrayAdapter<String> adaptermenu;
+    DATA database = new DATA(HomeActivity.this);
 
 
 
@@ -109,7 +114,6 @@ public class HomeActivity extends AppCompatActivity {
         initialization();
 
         adapterItems = new ArrayAdapter<String>(HomeActivity.this, R.layout.list_item, items);
-        adaptermenu = new ArrayAdapter<String>(HomeActivity.this, R.layout.list_item, items);
 
         TranslatorOptions translatorOptionsGerman = new TranslatorOptions.Builder()
                 .setSourceLanguage(TranslateLanguage.ENGLISH)
@@ -311,23 +315,30 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
         autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
             @Override
+
             public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
                 String item = parent.getItemAtPosition(position).toString();
                 if (item.equals("English") && ar) {
+
                     buttonEnglish(view);
+
                 } else if ((item.equals("English") && fre)) {
                     buttonFrenchToEnglish(view);
 
                 } else if ((item.equals("English") && ger)) {
-
                     buttonGermanToEnglish(view);
+
                 } else if ((item.equals("English") && ice)) {
                     buttonIcelandicToEn(view);
+
                 } else if ((item.equals("English") && kor)) {
                     buttonKoreanToEnglish(view);
+
                 } else if ((item.equals("English") && spa)) {
                     buttonSpanishToEnglish(view);
+
                 } else if(item.equals("Spanish")&&ar) {
                     buttonSpanishToArabic(view);
                 }else if ((item.equals("Spanish"))) {
@@ -352,7 +363,9 @@ public class HomeActivity extends AppCompatActivity {
                     buttonArabic(view);
                 }
 
+
             }
+
 
 
         });
@@ -371,10 +384,19 @@ public class HomeActivity extends AppCompatActivity {
         sign_lan_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                cliced=true;
                 startActivity(new Intent(HomeActivity.this, MainActivity.class));
                 finish();
             }
         });
+
+            Intent secound=getIntent();
+            st = secound.getStringExtra("value");
+            editText.setText(st, TextView.BufferType.EDITABLE);
+            cliced=false;
+
+
+
         setting_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -384,6 +406,7 @@ public class HomeActivity extends AppCompatActivity {
         });
 
 
+
     }
 
 
@@ -391,9 +414,11 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 100 || requestCode == RESULT_OK){
+        if((requestCode == 100 || requestCode == RESULT_OK)){
             editText.setText(data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS).get(0));
         }
+
+
     }
 
     private void downloadModel(){
@@ -637,6 +662,8 @@ public class HomeActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(String s) {
                             Transelation.setText(s);
+                            database.Translate(editText.getText().toString().trim(),Transelation.getText().toString());
+
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -645,6 +672,7 @@ public class HomeActivity extends AppCompatActivity {
                             Transelation.setText(e.toString());
                         }
                     });
+
         }
     }
     public void buttonArabic(View view){
@@ -655,6 +683,7 @@ public class HomeActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(String s) {
                             Transelation.setText(s);
+                            database.Translate(editText.getText().toString().trim(),Transelation.getText().toString());
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -663,6 +692,8 @@ public class HomeActivity extends AppCompatActivity {
                             Transelation.setText(e.toString());
                         }
                     });
+
+
         }
     }
     public void buttonKorean(View view){
@@ -672,6 +703,7 @@ public class HomeActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(String s) {
                             Transelation.setText(s);
+                            database.Translate(editText.getText().toString().trim(),Transelation.getText().toString());
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -680,6 +712,7 @@ public class HomeActivity extends AppCompatActivity {
                             Transelation.setText(e.toString());
                         }
                     });
+
         }
 
     }
@@ -690,6 +723,7 @@ public class HomeActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(String s) {
                             Transelation.setText(s);
+                            database.Translate(editText.getText().toString().trim(),Transelation.getText().toString());
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -698,6 +732,8 @@ public class HomeActivity extends AppCompatActivity {
                             Transelation.setText(e.toString());
                         }
                     });
+
+
         }
 
     }
@@ -708,6 +744,9 @@ public class HomeActivity extends AppCompatActivity {
                    @Override
                    public void onSuccess(String s) {
                        Transelation.setText(s);
+                       database.Translate(editText.getText().toString().trim(),Transelation.getText().toString());
+
+
                    }
                })
                .addOnFailureListener(new OnFailureListener() {
@@ -716,6 +755,7 @@ public class HomeActivity extends AppCompatActivity {
                        Transelation.setText(e.toString());
                    }
                });
+
    }
 
     }
@@ -744,6 +784,8 @@ public class HomeActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(String s) {
                             Transelation.setText(s);
+                            database.Translate(editText.getText().toString().trim(),Transelation.getText().toString());
+
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -752,6 +794,7 @@ public class HomeActivity extends AppCompatActivity {
                             Transelation.setText(e.toString());
                         }
                     });
+
         }
 
     }
@@ -762,6 +805,8 @@ public class HomeActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(String s) {
                             Transelation.setText(s);
+                            database.Translate(editText.getText().toString().trim(),Transelation.getText().toString());
+
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -770,6 +815,7 @@ public class HomeActivity extends AppCompatActivity {
                             Transelation.setText(e.toString());
                         }
                     });
+
         }
 
     }
@@ -780,6 +826,8 @@ public class HomeActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(String s) {
                             Transelation.setText(s);
+                            database.Translate(editText.getText().toString().trim(),Transelation.getText().toString());
+
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -788,6 +836,7 @@ public class HomeActivity extends AppCompatActivity {
                             Transelation.setText(e.toString());
                         }
                     });
+
         }
     }
     public void buttonFrenchToEnglish(View view){
@@ -797,6 +846,8 @@ public class HomeActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(String s) {
                             Transelation.setText(s);
+                            database.Translate(editText.getText().toString().trim(),Transelation.getText().toString());
+
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -805,6 +856,7 @@ public class HomeActivity extends AppCompatActivity {
                             Transelation.setText(e.toString());
                         }
                     });
+
         }
 
     }
@@ -815,6 +867,8 @@ public class HomeActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(String s) {
                         Transelation.setText(s);
+                        database.Translate(editText.getText().toString().trim(),Transelation.getText().toString());
+
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -823,6 +877,7 @@ public class HomeActivity extends AppCompatActivity {
                         Transelation.setText(e.toString());
                     }
                 });
+
     }
 
     }
@@ -833,6 +888,8 @@ public class HomeActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(String s) {
                             Transelation.setText(s);
+                            database.Translate(editText.getText().toString().trim(),Transelation.getText().toString());
+
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -841,6 +898,7 @@ public class HomeActivity extends AppCompatActivity {
                             Transelation.setText(e.toString());
                         }
                     });
+
         }
 
     }
@@ -851,6 +909,8 @@ public class HomeActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(String s) {
                             Transelation.setText(s);
+                            database.Translate(editText.getText().toString().trim(),Transelation.getText().toString());
+
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -859,6 +919,7 @@ public class HomeActivity extends AppCompatActivity {
                             Transelation.setText(e.toString());
                         }
                     });
+
         }
 
     }
@@ -869,6 +930,8 @@ public class HomeActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(String s) {
                             Transelation.setText(s);
+                            database.Translate(editText.getText().toString().trim(),Transelation.getText().toString());
+
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -877,6 +940,7 @@ public class HomeActivity extends AppCompatActivity {
                             Transelation.setText(e.toString());
                         }
                     });
+
         }
 
     }
@@ -887,6 +951,8 @@ public class HomeActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(String s) {
                             Transelation.setText(s);
+                            database.Translate(editText.getText().toString().trim(),Transelation.getText().toString());
+
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -895,6 +961,7 @@ public class HomeActivity extends AppCompatActivity {
                             Transelation.setText(e.toString());
                         }
                     });
+
         }
 
     }
@@ -905,6 +972,8 @@ public class HomeActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(String s) {
                             Transelation.setText(s);
+                            database.Translate(editText.getText().toString().trim(),Transelation.getText().toString());
+
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -913,6 +982,8 @@ public class HomeActivity extends AppCompatActivity {
                             Transelation.setText(e.toString());
                         }
                     });
+
+
         }
 
     }
@@ -923,6 +994,8 @@ public class HomeActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(String s) {
                             Transelation.setText(s);
+                            database.Translate(editText.getText().toString().trim(),Transelation.getText().toString());
+
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -931,6 +1004,8 @@ public class HomeActivity extends AppCompatActivity {
                             Transelation.setText(e.toString());
                         }
                     });
+
+
         }
 
     }   public void buttonItalianToArabic(View view){
@@ -940,6 +1015,8 @@ public class HomeActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(String s) {
                             Transelation.setText(s);
+                            database.Translate(editText.getText().toString().trim(),Transelation.getText().toString());
+
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -948,6 +1025,8 @@ public class HomeActivity extends AppCompatActivity {
                             Transelation.setText(e.toString());
                         }
                     });
+
+
         }
 
     }
@@ -958,6 +1037,8 @@ public class HomeActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(String s) {
                             Transelation.setText(s);
+                            database.Translate(editText.getText().toString().trim(),Transelation.getText().toString());
+
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -966,6 +1047,8 @@ public class HomeActivity extends AppCompatActivity {
                             Transelation.setText(e.toString());
                         }
                     });
+
+
         }
 
     }

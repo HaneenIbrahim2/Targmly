@@ -1,6 +1,8 @@
 package com.example.imagepro;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
@@ -8,7 +10,12 @@ import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.imagepro.Auth.HomeActivity;
 
 import org.opencv.android.Utils;
 import org.opencv.core.Core;
@@ -34,7 +41,9 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class signLanguageClass {
+public class signLanguageClass  extends AppCompatActivity {
+
+
     private Interpreter interpreter;
     private Interpreter interpreter2;
     // store all label in array
@@ -51,8 +60,10 @@ public class signLanguageClass {
     private String final_text="";
     private String current_text="";
     private TextToSpeech textToSpeech;
+    public String st;
 
-    signLanguageClass(Context context, Button clear_button, Button add_button, TextView change_text, Button text_speech_button, AssetManager assetManager, String modelPath, String labelPath, int inputSize , String classification_model , int classification_input_size) throws IOException{
+
+    signLanguageClass(Context context, Button clear_button, Button add_button, EditText change_text, Button Confirm,EditText editText, AssetManager assetManager, String modelPath, String labelPath, int inputSize , String classification_model , int classification_input_size) throws IOException{
         INPUT_SIZE=inputSize;
         Classification_Input_Size=classification_input_size;
         // use to define gpu or cpu // no. of threads
@@ -75,32 +86,39 @@ public class signLanguageClass {
 
             }
         });
+
         add_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final_text=final_text+current_text;
                 change_text.setText(final_text);
 
-            }
-        });
-        textToSpeech= new TextToSpeech(context, new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-                if(status!=TextToSpeech.ERROR){
-                    textToSpeech.setLanguage(Locale.ENGLISH);
-
-                }
+                setFinal_text(final_text);
             }
         });
 
-      text_speech_button.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View view) {
-           textToSpeech.speak(final_text,TextToSpeech.QUEUE_FLUSH,null);
-          }
-      });
+//        textToSpeech= new TextToSpeech(context, new TextToSpeech.OnInitListener() {
+//            @Override
+//            public void onInit(int status) {
+//                if(status!=TextToSpeech.ERROR){
+//                    textToSpeech.setLanguage(Locale.ENGLISH);
+//
+//                }
+//            }
+//        });
+
+
+
+//      text_speech_button.setOnClickListener(new View.OnClickListener() {
+//          @Override
+//          public void onClick(View view) {
+//           textToSpeech.speak(final_text,TextToSpeech.QUEUE_FLUSH,null);
+//          }
+//      });
+
 
     }
+
 
     private List<String> loadLabelList(AssetManager assetManager, String labelPath) throws IOException {
         // to store label
@@ -302,6 +320,13 @@ public class signLanguageClass {
 
     }
 
+    public void setFinal_text(String final_text) {
+        this.final_text = final_text;
+    }
+
+    public String getFinal_text() {
+        return final_text;
+    }
 
     private ByteBuffer convertBitmapToByteBuffer(Bitmap bitmap) {
         ByteBuffer byteBuffer;

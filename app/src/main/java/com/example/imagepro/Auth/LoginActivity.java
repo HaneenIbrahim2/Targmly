@@ -14,13 +14,14 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.imagepro.R;
-import com.example.imagepro.database.DatabaseHelper;
+
+import com.example.imagepro.database.DATA;
 import com.example.imagepro.database.DatabaseHelper;
 
 public class LoginActivity extends AppCompatActivity {
     EditText usernameEditText, emailEditText, passwordEditText;
     Button LoginButton;
-    DatabaseHelper database;
+    DatabaseHelper dp;
     TextView t1,t2;
     private  final  static String username="name";
     private  final  static String email="email";
@@ -33,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
         emailEditText = (EditText) findViewById(R.id.emailLogin);
         passwordEditText = (EditText) findViewById(R.id.passwordLogin);
         LoginButton = (Button) findViewById(R.id.LoginButton);
-        database = new DatabaseHelper(this);
+        dp = new DatabaseHelper(this);
 
         t1=findViewById(R.id.textView3);
         t2=findViewById(R.id.textView5);
@@ -69,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
                 else {
-                    boolean checkpassword =database.checkEmailAndPassword(email,password);
+                    boolean checkpassword =dp.checkEmailAndPassword(email,password);
                     if(checkpassword){
 
                         Toast.makeText(LoginActivity.this,"login sucsessfully",Toast.LENGTH_SHORT).show();

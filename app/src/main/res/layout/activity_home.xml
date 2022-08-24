@@ -35,6 +35,15 @@
         app:layout_constraintVertical_bias="0.305" />
 
 
+    <ImageView
+        android:layout_width="27dp"
+        android:layout_height="22dp"
+        android:src="@drawable/ic_baseline_content_copy_24"
+        app:layout_constraintEnd_toEndOf="@+id/speechText"
+        app:layout_constraintHorizontal_bias="0.961"
+        app:layout_constraintStart_toStartOf="@+id/speechText"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="184dp" />
 
     <EditText
         android:id="@+id/Transelation"
@@ -53,10 +62,11 @@
         app:layout_constraintTop_toBottomOf="@+id/speechText"
         app:layout_constraintVertical_bias="0.508" />
 
+
     <Button
         android:id="@+id/sign_language_btn"
         android:layout_width="102dp"
-        android:layout_height="39dp"
+        android:layout_height="56dp"
         android:text="Sign Language"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -68,25 +78,15 @@
 
     <Button
         android:id="@+id/setting_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="108dp"
+        android:layout_height="50dp"
         android:layout_marginTop="26dp"
         android:layout_marginEnd="30dp"
         android:text="Settings"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="84dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="160dp"
-        android:layout_marginTop="100dp"
-        android:onClick="buttonDownloadModel"
-        android:text="Download Model"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="OnClick" />
+
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"

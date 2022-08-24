@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.imagepro.R;
+import com.example.imagepro.database.DATA;
 import com.example.imagepro.database.DatabaseHelper;
 
 public class SignUpActivity extends AppCompatActivity {
@@ -23,7 +24,10 @@ public static String PREFS_NAME="MyPrefsFile";
     EditText usernameEditText, emailEditText, passwordEditText, confirmPasswordEditText;
     Button signUpButton;
     Button Login_activity;
-    DatabaseHelper database;
+    DatabaseHelper dp;
+     EditText editText;
+     EditText Transelation;
+     int i=0;
     SharedPreferences sp;
     private  final  static String username="name";
     private  final  static String email="email";
@@ -38,10 +42,12 @@ public static String PREFS_NAME="MyPrefsFile";
         emailEditText = (EditText) findViewById(R.id.emailSignUp);
         passwordEditText = (EditText) findViewById(R.id.passwordSignUp);
         confirmPasswordEditText = (EditText) findViewById(R.id.confirmPassword);
+        editText = findViewById(R.id.speechText);
+        Transelation = findViewById(R.id.Transelation);
         signUpButton = (Button) findViewById(R.id.signUpButton);
         Login_activity =(Button) findViewById(R.id.LogIn_btn);
 
-        database = new DatabaseHelper(this);
+        dp = new DatabaseHelper(this);
 
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,6 +58,7 @@ public static String PREFS_NAME="MyPrefsFile";
                 editor.putString(email, emailEditText.getText().toString());
                 editor.putString(password, passwordEditText.getText().toString());
                 editor.putString(confirmPassword, confirmPasswordEditText.getText().toString());
+
                 editor.apply();
                 String name =sharedPreferences.getString(username,null);
 //                String Email =sharedPreferences.getString(email,null);
@@ -88,9 +95,10 @@ public static String PREFS_NAME="MyPrefsFile";
                     return;
                 }
                 if(valueOf(passwordEditText.getText().toString()).equals(valueOf(confirmPasswordEditText.getText().toString()))) {
-                    Boolean checkUser = database.checkEmail(email);
+                    Boolean checkUser = dp.checkEmail(email);
                     if(!checkUser) {
-                        Boolean insertUser = database.insertData(username, email, password);
+                        Boolean insertUser = dp.insertData(username,email, password);
+                        i++;
                         if(insertUser) {
                             Toast.makeText(getApplicationContext(), "Registered Successfully", Toast.LENGTH_SHORT).show();
 
