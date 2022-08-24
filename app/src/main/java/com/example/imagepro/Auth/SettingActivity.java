@@ -1,8 +1,10 @@
 package com.example.imagepro.Auth;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -29,6 +31,10 @@ public class SettingActivity extends AppCompatActivity {
         Button Back;
         Button Account;
         Button History_btn;
+
+        final SharedPreferences setting = getSharedPreferences("setting", MODE_PRIVATE);
+        final SharedPreferences.Editor editor = setting.edit();
+        boolean darkmodeon = setting.getBoolean("NightMode", false);
 
 
         Spinner spinner;
@@ -88,6 +94,35 @@ public class SettingActivity extends AppCompatActivity {
                 startActivity(new Intent(SettingActivity.this, HomeActivity.class));
             }
         });
+
+        if(darkmodeon)
+
+        {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else
+
+        {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+//        Button btn = findViewById(R.id.button);
+//        btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                if (darkmodeon) {
+//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+//                    editor.putBoolean("NightMode", false);
+//                    editor.apply();
+//
+//                } else {
+//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+//                    editor.putBoolean("NightMode", true);
+//                    editor.apply();
+//
+//                }
+//            }
+//
+//        });
 
 
     }

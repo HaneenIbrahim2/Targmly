@@ -349,7 +349,6 @@ public class HomeActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
                 String item = parent.getItemAtPosition(position).toString();
                 if (item.equals("English") && ar) {
-
                     buttonEnglish(view);
 
                 } else if ((item.equals("English") && fre)) {

@@ -55,7 +55,6 @@ public class History extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId()==R.id.deleteHistory){
-            comfirmdeletion();
             database.deleteHis();
             Toast.makeText(this,"All deleted",Toast.LENGTH_LONG).show();
             recreate();
@@ -63,27 +62,6 @@ public class History extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-    void comfirmdeletion(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(History.this);
-        builder.setTitle("Delete all");
-        builder.setMessage("Are you sure you want to delete all history ?");
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                database.deleteHis();
-                Intent intent = new Intent(History.this, SettingActivity.class);
-                startActivity(intent);
-                finish();
-
-            }
-        });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-            }
-        });
     }
 
     @Override
