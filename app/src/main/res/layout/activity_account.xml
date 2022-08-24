@@ -10,8 +10,8 @@
         android:id="@+id/Back_btn"
         android:layout_width="70dp"
         android:layout_height="wrap_content"
-        android:text="Back"
-    />
+        android:text="@string/back"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/textView1"
@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="25dp"
         android:baselineAligned="false"
-        android:text="User details"
+        android:text="@string/userdatials"
         android:textSize="44sp"
         app:textAllCaps="false"
         tools:layout_editor_absoluteX="29dp"
@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:baselineAligned="false"
-        android:text="Name"
+        android:text="@string/Name"
         android:textSize="20sp"
         tools:ignore="HardcodedText" />
 
@@ -48,7 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:baselineAligned="false"
-        android:text="E-mail"
+        android:text="@string/Email"
         android:textSize="20sp"
         tools:ignore="HardcodedText" />
 
@@ -69,7 +69,7 @@
         android:layout_gravity="center"
         android:layout_margin="17dp"
         android:baselineAligned="false"
-        android:text="Log Out" />
+        android:text="@string/logout" />
 
 
 </LinearLayout>

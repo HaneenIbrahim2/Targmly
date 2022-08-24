@@ -13,6 +13,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -20,6 +21,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 
 
+import com.example.imagepro.CombineLettersActivity;
 import com.example.imagepro.R;
 import com.example.imagepro.database.DATA;
 import com.example.imagepro.database.DATA;
@@ -42,17 +44,29 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.imagepro.MainActivity;
+//import com.example.imagepro.MainActivity;
+
+import org.opencv.android.OpenCVLoader;
 
 import java.util.Locale;
 
 
 public class HomeActivity extends AppCompatActivity {
 
-    Button speakButton ;
+    static {
+        if(OpenCVLoader.initDebug()){
+            Log.d("MainActivity: ","Opencv is loaded");
+        }
+        else {
+            Log.d("MainActivity: ","Opencv failed to load");
+        }
+    }
+
+    ImageView speakButton ;
     Button sign_lan_btn;
     Button setting_btn;
     String st;
+    private Button combine_letter_button;
     ImageView speech_copy,trans_copy,speech_voice,trans_voice;
     TextToSpeech textToSpeech;
     private EditText editText;
@@ -399,7 +413,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 cliced=true;
-                startActivity(new Intent(HomeActivity.this, MainActivity.class));
+                startActivity(new Intent(HomeActivity.this, CombineLettersActivity.class));
                 finish();
             }
         });
@@ -455,7 +469,6 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
-
 
 
     }
@@ -1107,7 +1120,7 @@ public class HomeActivity extends AppCompatActivity {
 
     public void initialization(){
 
-        speakButton = (Button) findViewById(R.id.speech);
+        speakButton = (ImageView) findViewById(R.id.speech);
         sign_lan_btn = (Button) findViewById(R.id.sign_language_btn);
         setting_btn = (Button) findViewById(R.id.setting_btn);
         editText = findViewById(R.id.speechText);

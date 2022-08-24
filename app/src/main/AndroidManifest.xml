@@ -49,13 +49,10 @@
         <activity
             android:name=".Auth.LoginActivity"
             android:exported="false" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="false" />
+
         <activity
             android:name=".CombineLettersActivity"
             android:exported="false" />
-        <activity android:name=".CameraActivity" />
         <activity
             android:name=".Auth.SplashScreen"
             android:exported="true">

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="Generallanguage">اللغه العامة</string>
+    <string name="word">:الكلمة</string>
+    <string name="trans">:معناها</string>
+    <string name="darkmode">الوضع الليلي</string>
+    <string name="okay">حسنا</string>
+    <string name="string_arabic">عربي</string>
+    <string name="English">انجليزي</string>
+    <string name="app_name">ترجملي</string>
+    <string name="signlanguage"> لغة الإشارة</string>
+    <string name="account">الحساب</string>
+    <string name="logout">تسجيل خروج</string>
+    <string name="history">السجل</string>
+    <string name="cleardata">مسح</string>
+    <string name="setting">الاعدادات</string>
+    <string name="login">تسجيل دخول</string>
+    <string name="home">الرئسية</string>
+    <string name="camera">الكاميرا</string>
+    <string name="textview">نص</string>
+    <string name="speachText">مرحبا</string>
+    <string name="Username">اسم المستخدم</string>
+    <string name="Email">البريد الإلكتروني</string>
+    <string name="Password">كلمة السر</string>
+    <string name="ConfirmPassword">تأكيد كلمة السر</string>
+    <string name="select">اختار عنصر</string>
+    <string name="signup">تسجيل </string>
+    <string name="back">رجوع</string>
+    <string name="Add">إضافة</string>
+    <string name="Clear">مسح</string>
+    <string name="confirm">تأكيد</string>
+    <string name="Name">الإسم</string>
+    <string name="userdatials">معلومات المستخدم</string>
+</resources>
