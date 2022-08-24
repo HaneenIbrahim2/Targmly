@@ -36,14 +36,27 @@
 
 
     <ImageView
+        android:id="@+id/speech_copy"
         android:layout_width="27dp"
         android:layout_height="22dp"
         android:src="@drawable/ic_baseline_content_copy_24"
+        app:layout_constraintBottom_toBottomOf="@+id/speechText"
         app:layout_constraintEnd_toEndOf="@+id/speechText"
         app:layout_constraintHorizontal_bias="0.961"
         app:layout_constraintStart_toStartOf="@+id/speechText"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="184dp" />
+        app:layout_constraintTop_toTopOf="@+id/speechText"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/speech_voice"
+        android:layout_width="27dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="264dp"
+        android:src="@drawable/ic_baseline_volume_up_24"
+        app:layout_constraintBottom_toBottomOf="@+id/speechText"
+        app:layout_constraintStart_toStartOf="@+id/speechText"
+        app:layout_constraintTop_toTopOf="@+id/speechText"
+        tools:ignore="MissingConstraints" />
 
     <EditText
         android:id="@+id/Transelation"
@@ -62,6 +75,33 @@
         app:layout_constraintTop_toBottomOf="@+id/speechText"
         app:layout_constraintVertical_bias="0.508" />
 
+
+    <ImageView
+        android:id="@+id/trans_copy"
+        android:layout_width="27dp"
+        android:layout_height="22dp"
+        android:src="@drawable/ic_baseline_content_copy_24"
+
+        app:layout_constraintBottom_toBottomOf="@+id/Transelation"
+        app:layout_constraintEnd_toEndOf="@+id/Transelation"
+        app:layout_constraintHorizontal_bias="0.96"
+        app:layout_constraintStart_toStartOf="@+id/Transelation"
+        app:layout_constraintTop_toTopOf="@+id/Transelation"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/trans_voice"
+        android:layout_width="27dp"
+        android:layout_height="22dp"
+        android:src="@drawable/ic_baseline_volume_up_24"
+
+        app:layout_constraintBottom_toBottomOf="@+id/Transelation"
+        app:layout_constraintEnd_toStartOf="@+id/trans_copy"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/Transelation"
+        app:layout_constraintTop_toTopOf="@+id/Transelation"
+        app:layout_constraintVertical_bias="0.487"
+        tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/sign_language_btn"

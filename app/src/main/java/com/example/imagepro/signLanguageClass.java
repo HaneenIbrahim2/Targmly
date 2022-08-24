@@ -97,16 +97,6 @@ public class signLanguageClass  extends AppCompatActivity {
             }
         });
 
-//        textToSpeech= new TextToSpeech(context, new TextToSpeech.OnInitListener() {
-//            @Override
-//            public void onInit(int status) {
-//                if(status!=TextToSpeech.ERROR){
-//                    textToSpeech.setLanguage(Locale.ENGLISH);
-//
-//                }
-//            }
-//        });
-
 
 
 //      text_speech_button.setOnClickListener(new View.OnClickListener() {

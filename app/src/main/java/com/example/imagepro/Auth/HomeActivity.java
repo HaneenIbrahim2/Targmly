@@ -7,7 +7,12 @@ import androidx.annotation.Nullable;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -33,9 +38,13 @@ import com.google.mlkit.nl.translate.TranslatorOptions;
 import android.content.Intent;
 import android.speech.RecognizerIntent;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.imagepro.MainActivity;
+
+import java.util.Locale;
 
 
 public class HomeActivity extends AppCompatActivity {
@@ -44,6 +53,8 @@ public class HomeActivity extends AppCompatActivity {
     Button sign_lan_btn;
     Button setting_btn;
     String st;
+    ImageView speech_copy,trans_copy,speech_voice,trans_voice;
+    TextToSpeech textToSpeech;
     private EditText editText;
     private EditText Transelation;
 
@@ -312,8 +323,11 @@ public class HomeActivity extends AppCompatActivity {
                      break;
 
              }
+
             }
+
         });
+
         autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -389,6 +403,20 @@ public class HomeActivity extends AppCompatActivity {
                 finish();
             }
         });
+        Text_to_speech_en();
+        speech_voice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                textToSpeech.speak(editText.getText().toString(),TextToSpeech.QUEUE_FLUSH,null);
+            }
+        });
+
+        trans_voice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                textToSpeech.speak(Transelation.getText().toString(),TextToSpeech.QUEUE_FLUSH,null);
+            }
+        });
 
             Intent secound=getIntent();
             st = secound.getStringExtra("value");
@@ -402,6 +430,29 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View view) {
             startActivity(new Intent(HomeActivity.this , SettingActivity.class));
             finish();
+            }
+        });
+        speech_copy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ClipboardManager clipboardManager=(ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clipData=ClipData.newPlainText("text",editText.getText().toString());
+                clipboardManager.setPrimaryClip(clipData);
+                speech_copy.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_content_copy_24));
+                Toast.makeText(HomeActivity.this,"copied successfully",Toast.LENGTH_LONG).show();
+
+            }
+        });
+
+        trans_copy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ClipboardManager clipboardManager=(ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clipData=ClipData.newPlainText("text",editText.getText().toString());
+                clipboardManager.setPrimaryClip(clipData);
+                trans_copy.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_content_copy_24));
+                Toast.makeText(HomeActivity.this,"copied successfully",Toast.LENGTH_LONG).show();
+
             }
         });
 
@@ -1063,11 +1114,28 @@ public class HomeActivity extends AppCompatActivity {
         Transelation = findViewById(R.id.Transelation);
         autoCompleteTextView = findViewById(R.id.auto_complete_txt);
         drop_menu = findViewById(R.id.dropdown_menu);
-
-
+       speech_copy=findViewById(R.id.speech_copy);
+       trans_copy=findViewById(R.id.trans_copy);
+       speech_voice=findViewById(R.id.speech_voice);
+       trans_voice=findViewById(R.id.trans_voice);
 
 
     }
+    public void Text_to_speech_en(){
+             textToSpeech= new TextToSpeech(HomeActivity.this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(status!=TextToSpeech.ERROR){
+                    textToSpeech.setLanguage(Locale.getDefault());
+
+                }
+            }
+        });
+
+
+    }
+
+
 }
 
 
