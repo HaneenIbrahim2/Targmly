@@ -7,13 +7,20 @@ import androidx.annotation.Nullable;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -29,6 +36,9 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 
+import com.google.android.gms.vision.Frame;
+import com.google.android.gms.vision.text.TextBlock;
+import com.google.android.gms.vision.text.TextRecognizer;
 import com.google.mlkit.common.model.DownloadConditions;
 
 
@@ -62,15 +72,20 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    ImageView speakButton ;
+    ImageView speakButton ,camera ;
     Button sign_lan_btn;
     Button setting_btn;
     String st;
+    Activity activity;
     private Button combine_letter_button;
     ImageView speech_copy,trans_copy,speech_voice,trans_voice;
     TextToSpeech textToSpeech;
     private EditText editText;
     private EditText Transelation;
+   private static final int CAMERA_REQUEST=10;
+    private static final int PERMISION_CODE=100;
+
+
 
     private Translator translatorGerman;
     private Translator translatorArabic;
@@ -132,11 +147,16 @@ public class HomeActivity extends AppCompatActivity {
 
 
 
+    @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         initialization();
+
+
+
+
 
         adapterItems = new ArrayAdapter<String>(HomeActivity.this, R.layout.list_item, items);
 
@@ -468,18 +488,56 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
+       camera.setOnClickListener(v->{
+           if(checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+               requestPermissions(new String[]{Manifest.permission.CAMERA},PERMISION_CODE);
+           }else{
+               Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+               startActivityForResult(camera,CAMERA_REQUEST);
 
+           }
+       });
 
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode==PERMISION_CODE){
+              if(grantResults[0]==PackageManager.PERMISSION_GRANTED){
+                  Toast.makeText(activity ,"Granted",Toast.LENGTH_LONG).show();
+              }else{
+                  Toast.makeText(activity ,"Not Granted",Toast.LENGTH_LONG).show();
 
+              }
+
+        }
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if((requestCode == 100 || requestCode == RESULT_OK)){
+        if((requestCode == 100 || requestCode == RESULT_OK)) {
             editText.setText(data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS).get(0));
+
+        }else if(requestCode==CAMERA_REQUEST && resultCode==Activity.RESULT_OK){
+            Bitmap image = (Bitmap) data.getExtras().get("data");
+           TextDeta(image);
         }
+
+
+    }
+    public void TextDeta(Bitmap image){
+        TextRecognizer textRecognizer=new TextRecognizer.Builder(HomeActivity.this).build();
+        Frame frame = new Frame.Builder().setBitmap(image).build();
+        SparseArray<TextBlock> sparseArray =textRecognizer.detect(frame);
+        StringBuilder stringBuilder=new StringBuilder();
+        for(int i=0 ; i<sparseArray.size();i++){
+            TextBlock textBlock =sparseArray.get(i);
+            String str =textBlock.getValue();
+            stringBuilder.append(str);
+        }
+        editText.setText(stringBuilder, EditText.BufferType.EDITABLE);
 
 
     }
@@ -1130,6 +1188,7 @@ public class HomeActivity extends AppCompatActivity {
        trans_copy=findViewById(R.id.trans_copy);
        speech_voice=findViewById(R.id.speech_voice);
        trans_voice=findViewById(R.id.trans_voice);
+       camera=findViewById(R.id.Camera);
 
 
     }

@@ -8,6 +8,20 @@
 
 
     <ImageView
+        android:id="@+id/Camera"
+        android:layout_width="50dp"
+        android:layout_height="43dp"
+        android:src="@drawable/ic_baseline_photo_camera_24"
+        app:layout_constraintBottom_toTopOf="@+id/tabMode"
+
+        app:layout_constraintEnd_toStartOf="@+id/speech"
+        app:layout_constraintHorizontal_bias="0.535"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Transelation"
+        app:layout_constraintVertical_bias="0.33"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
         android:id="@+id/speech"
         android:layout_width="47dp"
         android:layout_height="49dp"
@@ -15,10 +29,10 @@
         android:src="@drawable/ic_baseline_keyboard_voice_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.75"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/speechText"
-        app:layout_constraintVertical_bias="0.847"
+        app:layout_constraintVertical_bias="0.896"
         tools:ignore="DuplicateIds,MissingConstraints" />
 
     <EditText

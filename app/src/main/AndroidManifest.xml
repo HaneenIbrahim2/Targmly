@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -25,15 +27,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ImagePro">
-
+        <activity
+            android:name=".TextDetaction"
+            android:exported="false" />
 
         <meta-data
             android:name="com.google.mlkit.vision.DEPENDENCIES"
             android:value="langid" />
+
         <activity
             android:name=".database.History"
             android:exported="false" />
-
         <activity
             android:name=".Auth.AccountPage"
             android:exported="false" />
@@ -49,7 +53,6 @@
         <activity
             android:name=".Auth.LoginActivity"
             android:exported="false" />
-
         <activity
             android:name=".CombineLettersActivity"
             android:exported="false" />
